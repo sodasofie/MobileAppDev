@@ -1,35 +1,34 @@
+
 package com.example.q;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+//import android.graphics.Camera;
+import android.hardware.Camera;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.SparseArray;
-import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
-import android.content.Intent;
 
 import java.io.IOException;
 
+
 public class ScanQrCodeActivity extends AppCompatActivity {
 
-
-    public class Constants {
+    public static class Constants {
         public static final String QR_CODE_KEY = "qr_code_key";
         private static final int CAMERA_REQUEST_CODE = 23;
     }
@@ -37,6 +36,9 @@ public class ScanQrCodeActivity extends AppCompatActivity {
     private SurfaceView scanSurfaceView;
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
+    private boolean isFlashOn = false;
+    private Camera camera;
+    private Camera.Parameters params;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,9 @@ public class ScanQrCodeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scan_qr_code);
 
         scanSurfaceView = findViewById(R.id.scan_surface_view);
+        Button flashButton = findViewById(R.id.flash_button);
+        flashButton.setOnClickListener(v -> toggleFlash());
+
         initBarcodeDetector();
     }
 
@@ -81,7 +86,7 @@ public class ScanQrCodeActivity extends AppCompatActivity {
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
-                // Ваш код для вивільнення ресурсів
+                // ?? код для вивільнення ресурсів
             }
 
             @Override
@@ -145,5 +150,26 @@ public class ScanQrCodeActivity extends AppCompatActivity {
         });
     }
 
-
+    private void toggleFlash() {
+        if (cameraSource != null) {
+            try {
+                cameraSource.stop();
+                camera = Camera.open();
+                params = camera.getParameters();
+                if (isFlashOn) {
+                    params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+                } else {
+                    params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+                }
+                camera.setParameters(params);
+                camera.startPreview();
+                isFlashOn = !isFlashOn;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
+
+
+
