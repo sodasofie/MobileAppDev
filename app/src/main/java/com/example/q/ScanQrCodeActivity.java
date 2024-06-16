@@ -88,21 +88,6 @@ public class ScanQrCodeActivity extends AppCompatActivity {
                 // Release resources
             }
 
-            /* @Override
-            public void receiveDetections(Detector.Detections<Barcode> detections) {
-                SparseArray<Barcode> barcodes = detections.getDetectedItems();
-
-                if (barcodes.size() != 0) {
-                    for (int i = 0; i < barcodes.size(); i++) {
-                        Barcode barcode = barcodes.valueAt(i);
-                        if (barcode.displayValue != null && !barcode.displayValue.isEmpty()) {
-                            onQrCodeScanned(barcode.displayValue);
-                        }
-                    }
-                }
-            }
-        });
-    } */
 
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
@@ -130,25 +115,6 @@ public class ScanQrCodeActivity extends AppCompatActivity {
                 .build();
     }
 
-    /* private void initScanSurfaceView() {
-        scanSurfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
-            @Override
-            public void surfaceCreated(SurfaceHolder holder) {
-                if (ActivityCompat.checkSelfPermission(ScanQrCodeActivity.this,
-                        android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                    try {
-                        cameraSource.start(scanSurfaceView.getHolder());
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                } else {
-                    ActivityCompat.requestPermissions(
-                            ScanQrCodeActivity.this,
-                            new String[]{android.Manifest.permission.CAMERA},
-                            Constants.CAMERA_REQUEST_CODE
-                    );
-                }
-            } */
 
     private void initScanSurfaceView() {
         scanSurfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {

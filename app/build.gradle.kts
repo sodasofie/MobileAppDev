@@ -36,9 +36,10 @@ dependencies {
     implementation(libs.constraintlayout)
 
     //implementation("com.google.android.gms:play-services-vision:20.1.3")
-    implementation("com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.0")
+    implementation(libs.com.google.android.gms.play.services.mlkit.barcode.scanning)
     implementation(libs.play.services.vision.common)
     implementation(libs.play.services.vision)
+    //implementation ("com.google.zxing:core:3.4.1")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
