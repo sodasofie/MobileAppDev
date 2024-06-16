@@ -9,6 +9,7 @@ import com.google.zxing.MultiFormatReader;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.SparseArray;
@@ -34,6 +35,8 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -76,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
                                     String decoded = scanQRImage(bitmap);
                                     if (decoded != null) {
                                         updateQrCodeEditText(decoded);
+
+                                        // Додаємо результат до історії сканувань
+                                        addToScanHistory(decoded);
                                     } else {
                                         Toast.makeText(this, "QR код в зображенні не знайдено", Toast.LENGTH_SHORT).show();
                                     }
@@ -127,8 +133,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void addToScanHistory(String result) {
+        SharedPreferences prefs = getSharedPreferences("scan_history", MODE_PRIVATE);
+        Set<String> existingHistory = prefs.getStringSet("history", new HashSet<>());
+        existingHistory.add(result);
 
-      private String scanQRImage(Bitmap bMap) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putStringSet("history", existingHistory);
+        editor.apply();
+    }
+
+    private String scanQRImage(Bitmap bMap) {
         String contents = null;
 
         Frame frame = new Frame.Builder().setBitmap(bMap).build();
@@ -141,3 +156,4 @@ public class MainActivity extends AppCompatActivity {
         return contents;
     }
 }
+
