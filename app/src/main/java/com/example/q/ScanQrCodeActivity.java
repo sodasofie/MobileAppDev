@@ -11,6 +11,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.Button;
 import android.widget.Toast;
+import android.widget.ImageButton;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -38,13 +39,14 @@ public class ScanQrCodeActivity extends AppCompatActivity {
 
     public static class Constants {
         public static final String QR_CODE_KEY = "qr_code_key";
-        private static final int CAMERA_REQUEST_CODE = 23;
+        public static final int CAMERA_REQUEST_CODE = 23;
     }
 
     private SurfaceView scanSurfaceView;
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
     private boolean isFlashOn = false;
+    private ImageButton flashButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +54,7 @@ public class ScanQrCodeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scan_qr_code);
 
         scanSurfaceView = findViewById(R.id.scan_surface_view);
-        Button flashButton = findViewById(R.id.flash_button);
+        flashButton = findViewById(R.id.flash_button);
         flashButton.setOnClickListener(v -> toggleFlash());
 
         initBarcodeDetector();
@@ -167,8 +169,10 @@ public class ScanQrCodeActivity extends AppCompatActivity {
                         Camera.Parameters params = camera.getParameters();
                         if (isFlashOn) {
                             params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+                            flashButton.setImageResource(R.drawable.flash_off); // Зображення для вимкненого ліхтаря
                         } else {
                             params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+                            flashButton.setImageResource(R.drawable.flash_on); // Зображення для увімкненого ліхтаря
                         }
                         camera.setParameters(params);
                         isFlashOn = !isFlashOn;
@@ -207,8 +211,6 @@ public class ScanQrCodeActivity extends AppCompatActivity {
         finish();
     }
 }
-
-
 
 
 
