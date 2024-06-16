@@ -2,6 +2,7 @@ package com.example.q;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.net.Uri;
@@ -33,6 +34,8 @@ import com.google.zxing.*;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class ScanQrCodeActivity extends AppCompatActivity {
@@ -105,10 +108,19 @@ public class ScanQrCodeActivity extends AppCompatActivity {
     }
 
     private void onQrCodeScanned(String value) {
+        saveScanToHistory(value);
+
         Intent intent = new Intent();
         intent.putExtra(Constants.QR_CODE_KEY, value);
         setResult(Activity.RESULT_OK, intent);
         finish();
+    }
+
+    private void saveScanToHistory(String value) {
+        SharedPreferences prefs = getSharedPreferences("scan_history", MODE_PRIVATE);
+        Set<String> historySet = prefs.getStringSet("history", new HashSet<>());
+        historySet.add(value);
+        prefs.edit().putStringSet("history", historySet).apply();
     }
 
     private void initScanSurfaceView() {
