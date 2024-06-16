@@ -1,9 +1,17 @@
 package com.example.q;
 
+import com.example.q.ScanQrCodeActivity;
+import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.barcode.Barcode;
+import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.google.zxing.MultiFormatReader;
+
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +28,14 @@ import android.content.Intent;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 
+import android.graphics.Bitmap;
+import android.provider.MediaStore;
+import android.util.Log;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+
 public class MainActivity extends AppCompatActivity {
 
     EditText qrCodeValueEditText;
@@ -29,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     Button copyButton;
 
     private ActivityResultLauncher<Intent> resultLauncher;
+    BarcodeDetector barcodeDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         historyButton = findViewById(R.id.history_button);
         copyButton = findViewById(R.id.copy_button);
 
+        barcodeDetector = BarcodeDetectorProvider.getBarcodeDetector(this);
+
         resultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -51,9 +70,18 @@ public class MainActivity extends AppCompatActivity {
 
                             Uri selectedImage = result.getData().getData();
                             if (selectedImage != null) {
-                                Intent intent = new Intent(MainActivity.this, ScanQrCodeActivity.class);
-                                intent.setData(selectedImage);
-                                resultLauncher.launch(intent);
+                                try {
+                                    InputStream inputStream = getContentResolver().openInputStream(selectedImage);
+                                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                                    String decoded = scanQRImage(bitmap);
+                                    if (decoded != null) {
+                                        updateQrCodeEditText(decoded);
+                                    } else {
+                                        Toast.makeText(this, "QR код в зображенні не знайдено", Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     }
@@ -61,12 +89,6 @@ public class MainActivity extends AppCompatActivity {
         );
 
         initButtonClickListener();
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
     }
 
     private void initButtonClickListener() {
@@ -90,11 +112,11 @@ public class MainActivity extends AppCompatActivity {
             String textToCopy = qrCodeValueEditText.getText().toString();
             if (!textToCopy.isEmpty()) {
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("QR Code Value", textToCopy);
+                ClipData clip = ClipData.newPlainText("Значення QR коду", textToCopy);
                 clipboard.setPrimaryClip(clip);
                 Toast.makeText(MainActivity.this, "Скопійовано в буфер обміну", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(MainActivity.this, "Копіювати нічого", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Немає даних для копіювання", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -104,5 +126,22 @@ public class MainActivity extends AppCompatActivity {
             runOnUiThread(() -> qrCodeValueEditText.setText(data));
         }
     }
-}
 
+
+    private String scanQRImage(Bitmap bMap) {
+        String contents = null;
+
+        Frame frame = new Frame.Builder().setBitmap(bMap).build();
+        SparseArray<Barcode> barcodes = barcodeDetector.detect(frame);
+
+        if (barcodes.size() > 0) {
+            Barcode barcode = barcodes.valueAt(0);
+            contents = barcode.displayValue;
+        } else {
+            Log.e("QrTest", "Штрих-коду не знайдено");
+        }
+
+        return contents;
+    }
+
+}

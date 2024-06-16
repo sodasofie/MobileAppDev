@@ -39,7 +39,7 @@ dependencies {
     implementation(libs.com.google.android.gms.play.services.mlkit.barcode.scanning)
     implementation(libs.play.services.vision.common)
     implementation(libs.play.services.vision)
-    //implementation ("com.google.zxing:core:3.4.1")
+    implementation ("com.google.zxing:core:3.4.1")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
