@@ -1,4 +1,3 @@
-
 package com.example.q;
 
 import android.app.Activity;
@@ -77,7 +76,7 @@ public class ScanQrCodeActivity extends AppCompatActivity {
 
     private void initBarcodeDetector() {
         barcodeDetector = new BarcodeDetector.Builder(this)
-                .setBarcodeFormats(Barcode.ALL_FORMATS)
+                .setBarcodeFormats(Barcode.QR_CODE)
                 .build();
 
         initCameraSource();
@@ -86,10 +85,10 @@ public class ScanQrCodeActivity extends AppCompatActivity {
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
-                // ?? код для вивільнення ресурсів
+                // Release resources
             }
 
-            @Override
+            /* @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 SparseArray<Barcode> barcodes = detections.getDetectedItems();
 
@@ -99,6 +98,18 @@ public class ScanQrCodeActivity extends AppCompatActivity {
                         if (barcode.displayValue != null && !barcode.displayValue.isEmpty()) {
                             onQrCodeScanned(barcode.displayValue);
                         }
+                    }
+                }
+            }
+        });
+    } */
+
+            @Override
+            public void receiveDetections(Detector.Detections<Barcode> detections) {
+                if (detections != null && detections.getDetectedItems() != null) {
+                    Barcode barcode = detections.getDetectedItems().valueAt(0);
+                    if (barcode != null && barcode.displayValue != null && !barcode.displayValue.isEmpty()) {
+                        onQrCodeScanned(barcode.displayValue);
                     }
                 }
             }
@@ -119,7 +130,7 @@ public class ScanQrCodeActivity extends AppCompatActivity {
                 .build();
     }
 
-    private void initScanSurfaceView() {
+    /* private void initScanSurfaceView() {
         scanSurfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
@@ -130,6 +141,22 @@ public class ScanQrCodeActivity extends AppCompatActivity {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
+                } else {
+                    ActivityCompat.requestPermissions(
+                            ScanQrCodeActivity.this,
+                            new String[]{android.Manifest.permission.CAMERA},
+                            Constants.CAMERA_REQUEST_CODE
+                    );
+                }
+            } */
+
+    private void initScanSurfaceView() {
+        scanSurfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
+            @Override
+            public void surfaceCreated(SurfaceHolder holder) {
+                if (ActivityCompat.checkSelfPermission(ScanQrCodeActivity.this,
+                        android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                    startCamera();
                 } else {
                     ActivityCompat.requestPermissions(
                             ScanQrCodeActivity.this,
@@ -148,6 +175,24 @@ public class ScanQrCodeActivity extends AppCompatActivity {
                 cameraSource.release();
             }
         });
+    }
+
+    private void startCamera() {
+        try {
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            cameraSource.start(scanSurfaceView.getHolder());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void toggleFlash() {
