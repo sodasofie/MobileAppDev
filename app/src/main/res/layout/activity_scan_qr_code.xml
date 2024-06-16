@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="Toggle Flash"
+        android:text="Вмикнути ліхтар"
         tools:layout_editor_absoluteX="140dp"
         tools:layout_editor_absoluteY="0dp"
         tools:ignore="MissingConstraints" />

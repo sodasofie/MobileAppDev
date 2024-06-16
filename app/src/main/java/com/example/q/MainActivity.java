@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private String scanQRImage(Bitmap bMap) {
+      private String scanQRImage(Bitmap bMap) {
         String contents = null;
 
         Frame frame = new Frame.Builder().setBitmap(bMap).build();
@@ -137,11 +137,7 @@ public class MainActivity extends AppCompatActivity {
         if (barcodes.size() > 0) {
             Barcode barcode = barcodes.valueAt(0);
             contents = barcode.displayValue;
-        } else {
-            Log.e("QrTest", "Штрих-коду не знайдено");
         }
-
         return contents;
     }
-
 }
