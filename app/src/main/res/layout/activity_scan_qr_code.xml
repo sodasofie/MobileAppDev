@@ -17,6 +17,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
+
+
     <ImageButton
         android:id="@+id/flash_button"
         android:layout_width="60dp"
@@ -28,5 +30,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="5dp" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

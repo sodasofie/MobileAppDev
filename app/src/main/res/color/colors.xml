@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="false" android:color="#b6b7b5" />   <!-- Колір для вимкненої кнопки -->
+    <item android:state_pressed="true" android:color="#22a540" />    <!-- Колір для натиснутої кнопки -->
+    <item android:state_selected="true" android:color="#fabcff" />   <!-- Колір для вибраної кнопки -->
+    <item android:color="#ffffff" />
+    <item android:color="#5C628C" />
+    <item android:color="#25283E" />
+    <item android:color="#36C2ED" />
+</selector>

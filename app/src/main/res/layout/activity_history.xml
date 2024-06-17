@@ -1,36 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/history_list_view"
-        android:layout_width="0dp"
+        <!-- Кнопка "Назад" -->
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+
+        <ImageButton
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/arrow_back_white"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/back_button"
+            android:layout_gravity="start"
+            android:paddingStart="8dp"/>
+
+        <!-- Заголовок "ІСТОРІЯ СКАНУВАНЬ" -->
+        <TextView
+            android:id="@+id/history_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ІСТОРІЯ СКАНУВАНЬ"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:padding="16dp"
+            android:gravity="center"
+            android:textColor="@android:color/white" />
+    </androidx.appcompat.widget.Toolbar>
+    <!-- Контейнер для кнопок і текстів дат з прокруткою -->
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/clear_all_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_weight="1">
 
-    <Button
-        android:id="@+id/clear_selected_button"
-        android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/buttons_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp" />
+    </ScrollView>
+
+    <!-- Горизонтальний контейнер для кнопок -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Clear Selected"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="18dp"
-        android:layout_marginBottom="18dp"/>
+        android:orientation="horizontal"
+        android:layout_marginBottom="18dp"
+        android:gravity="center">
 
-    <Button
-        android:id="@+id/clear_all_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Clear All"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="18dp"/>
+        <!-- Кнопка "Очистити вибране" -->
+        <Button
+            android:id="@+id/clear_selected_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Очистити вибране"
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="18dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Кнопка "Очистити все" -->
+        <Button
+            android:id="@+id/clear_all_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Очистити все"
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="18dp" />
+    </LinearLayout>
+</LinearLayout>

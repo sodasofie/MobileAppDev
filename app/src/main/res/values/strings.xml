@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Q</string>
     <string name="flash_button_description">Flash Button</string>
+    <string name="back_button">Back</string>
 </resources>

@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+
 import java.io.FileInputStream;
 import java.io.InputStream;
 
@@ -157,6 +158,16 @@ public class ScanQrCodeActivity extends AppCompatActivity {
                 .build();
 
         try {
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             cameraSource.start(scanSurfaceView.getHolder());
         } catch (IOException e) {
             e.printStackTrace();
