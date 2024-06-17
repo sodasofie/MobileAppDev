@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -29,6 +30,7 @@ import androidx.core.content.ContextCompat;
 
 public class HistoryActivity extends AppCompatActivity {
     private Map<String, List<String>> scanHistoryMap;
+    private Set<String> selectedLinks = new HashSet<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,28 +40,25 @@ public class HistoryActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayShowTitleEnabled(false); // Сховати стандартний заголовок
+        getSupportActionBar().setDisplayShowTitleEnabled(false); // Hide default title
         TextView historyTitleTextView = findViewById(R.id.history_title);
         historyTitleTextView.setText("ІСТОРІЯ СКАНУВАНЬ");
 
         ImageButton backButton = findViewById(R.id.back_button);
         backButton.setOnClickListener(v -> onBackPressed());
 
-
         scanHistoryMap = getScanHistory();
 
-            Button clearSelectedButton = findViewById(R.id.clear_selected_button);
-            clearSelectedButton.setOnClickListener(v -> clearSelectedHistory());
+        Button clearSelectedButton = findViewById(R.id.clear_selected_button);
+        clearSelectedButton.setOnClickListener(v -> clearSelectedHistory());
 
-            Button clearAllButton = findViewById(R.id.clear_all_button);
-            clearAllButton.setOnClickListener(v -> clearAllHistory());
+        Button clearAllButton = findViewById(R.id.clear_all_button);
+        clearAllButton.setOnClickListener(v -> clearAllHistory());
 
-            displayHistory();
-        }
+        displayHistory();
+    }
 
-
-
-        private Map<String, List<String>> getScanHistory() {
+    private Map<String, List<String>> getScanHistory() {
         SharedPreferences prefs = getSharedPreferences("scan_history", MODE_PRIVATE);
         Map<String, ?> allEntries = prefs.getAll();
         Map<String, List<String>> historyMap = new LinkedHashMap<>();
@@ -91,15 +90,13 @@ public class HistoryActivity extends AppCompatActivity {
                 for (String link : links) {
                     Button button = createLinkButton(link);
                     if (selectedLinks.contains(link)) {
-                        button.setBackgroundColor(Color.LTGRAY);  // Set background color for selected link
+                        button.setBackgroundColor(ContextCompat.getColor(this, R.color.faderer_light_vio));
                     }
                     buttonsContainer.addView(button);
                 }
             }
         }
     }
-
-
 
     private void refreshButtons() {
         displayHistory();
@@ -117,7 +114,6 @@ public class HistoryActivity extends AppCompatActivity {
 
         refreshButtons();
     }
-
 
     private void clearAllHistory() {
         scanHistoryMap.clear();
@@ -143,31 +139,42 @@ public class HistoryActivity extends AppCompatActivity {
         editor.apply();
     }
 
-
-    private Set<String> selectedLinks = new HashSet<>();
-
     private Button createLinkButton(String link) {
         Button button = new Button(this);
         button.setText(link);
-        button.setOnClickListener(v -> {
-            if (selectedLinks.contains(link)) {
-
-                selectedLinks.remove(link);
-                button.setBackgroundColor(Color.TRANSPARENT);
-            } else {
-                selectedLinks.add(link);
-                button.setBackgroundColor(ContextCompat.getColor(this, R.color.faderer_light_vio));  // Set background color for selection
+        button.setBackgroundColor(ContextCompat.getColor(this, R.color.faderer_light_vio));
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                copyToClipboard(link);
             }
         });
+        button.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (selectedLinks.contains(link)) {
+                    selectedLinks.remove(link);
+                    button.setBackgroundColor(ContextCompat.getColor(HistoryActivity.this, R.color.faderer_light_vio));
+                } else {
+                    selectedLinks.add(link);
+                    button.setBackgroundColor(ContextCompat.getColor(HistoryActivity.this, R.color.fade_light_vio));
+                }
+                return true;
+            }
+        });
+
+        if (!selectedLinks.contains(link)) {
+            button.setBackgroundColor(ContextCompat.getColor(this, R.color.faderer_light_vio));
+        }
+
         return button;
     }
-
 
     private void copyToClipboard(String text) {
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText("Copied Text", text);
         clipboard.setPrimaryClip(clip);
-        Toast.makeText(this, "Copied to clipboard", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Скопійовано в буфер обміну", Toast.LENGTH_SHORT).show();
     }
 
     private String getCurrentDate() {
