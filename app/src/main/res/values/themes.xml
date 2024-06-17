@@ -1,9 +1,25 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Q" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/lavander_indigo</item>
+        <item name="colorPrimaryVariant">@color/fade_indigo</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <item name="colorSecondary">@color/aqua_blue</item>
+        <item name="colorSecondaryVariant">@color/fade_dark_indigo</item>
+        <item name="colorOnSecondary">@color/black</item>
+
+        <!-- Фон додатку -->
+        <item name="android:colorBackground">@color/fade_light_vio</item>
+        <item name="colorSurface">@color/black</item>
+        <item name="colorOnSurface">@color/white</item>
+
+        <!-- Інші налаштування -->
+        <item name="android:windowBackground">@color/black</item>
+        <item name="android:textColor">@color/white</item>
+
     </style>
 
     <style name="Theme.Q" parent="Base.Theme.Q" />
+
 </resources>

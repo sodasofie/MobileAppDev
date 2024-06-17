@@ -31,6 +31,7 @@ import java.util.Map;
 import java.util.Set;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 public class HistoryActivity extends AppCompatActivity {
     private Map<String, List<String>> scanHistoryMap;
@@ -165,7 +166,7 @@ public class HistoryActivity extends AppCompatActivity {
             } else {
                 // Not selected, so select it
                 selectedLinks.add(link);
-                button.setBackgroundColor(Color.GRAY);  // Set background color for selection
+                button.setBackgroundColor(ContextCompat.getColor(this, R.color.faderer_light_vio));  // Set background color for selection
             }
         });
         return button;

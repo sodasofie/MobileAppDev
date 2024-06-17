@@ -51,6 +51,8 @@ public class ScanQrCodeActivity extends AppCompatActivity {
     private CameraSource cameraSource;
     private boolean isFlashOn = false;
     private ImageButton flashButton;
+    private Button backButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,13 @@ public class ScanQrCodeActivity extends AppCompatActivity {
         scanSurfaceView = findViewById(R.id.scan_surface_view);
         flashButton = findViewById(R.id.flash_button);
         flashButton.setOnClickListener(v -> toggleFlash());
+
+        backButton = findViewById(R.id.back_button);
+        backButton.setOnClickListener(v -> {
+            Intent intent = new Intent(ScanQrCodeActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
 
         initBarcodeDetector();
         initScanSurfaceView();
@@ -72,7 +81,7 @@ public class ScanQrCodeActivity extends AppCompatActivity {
         if (cameraPermissionGranted(requestCode, grantResults)) {
             startCamera();
         } else {
-            Toast.makeText(this, "Камера необхідна для сканування QR- чи штрих- коду.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Камера необхідна для сканування QR- чи штрих-коду.", Toast.LENGTH_SHORT).show();
             finish();
         }
     }
@@ -159,13 +168,6 @@ public class ScanQrCodeActivity extends AppCompatActivity {
 
         try {
             if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
                 return;
             }
             cameraSource.start(scanSurfaceView.getHolder());

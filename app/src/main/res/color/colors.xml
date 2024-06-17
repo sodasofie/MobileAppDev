@@ -4,7 +4,5 @@
     <item android:state_pressed="true" android:color="#22a540" />    <!-- Колір для натиснутої кнопки -->
     <item android:state_selected="true" android:color="#fabcff" />   <!-- Колір для вибраної кнопки -->
     <item android:color="#ffffff" />
-    <item android:color="#5C628C" />
-    <item android:color="#25283E" />
-    <item android:color="#36C2ED" />
+
 </selector>

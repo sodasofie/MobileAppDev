@@ -2,15 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/fade_dark_indigo"
     android:orientation="vertical">
 
-        <!-- Кнопка "Назад" -->
+    <!-- Кнопка "Назад" -->
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="@color/fade_indigo"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
@@ -18,34 +19,37 @@
             android:id="@+id/back_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/arrow_back_white"
+            android:layout_gravity="start"
             android:background="?attr/selectableItemBackground"
             android:contentDescription="@string/back_button"
-            android:layout_gravity="start"
-            android:paddingStart="8dp"/>
+            android:paddingStart="8dp"
+            android:src="@drawable/arrow_back_white" />
 
         <!-- Заголовок "ІСТОРІЯ СКАНУВАНЬ" -->
         <TextView
             android:id="@+id/history_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ІСТОРІЯ СКАНУВАНЬ"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:padding="16dp"
+            android:backgroundTint="#6023A2"
             android:gravity="center"
-            android:textColor="@android:color/white" />
+            android:padding="16dp"
+            android:text="ІСТОРІЯ СКАНУВАНЬ"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
     <!-- Контейнер для кнопок і текстів дат з прокруткою -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@color/fade_light_vio">
 
         <LinearLayout
             android:id="@+id/buttons_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/fader_light_vio"
             android:orientation="vertical"
             android:padding="16dp" />
     </ScrollView>
@@ -54,26 +58,29 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginBottom="18dp"
-        android:gravity="center">
+        android:background="@color/fade_dark_indigo"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <!-- Кнопка "Очистити вибране" -->
         <Button
             android:id="@+id/clear_selected_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Очистити вибране"
             android:layout_marginStart="18dp"
-            android:layout_marginEnd="18dp" />
+            android:layout_marginEnd="18dp"
+            android:backgroundTint="@color/fade_indigo"
+            android:text="Очистити вибране" />
 
         <!-- Кнопка "Очистити все" -->
         <Button
             android:id="@+id/clear_all_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Очистити все"
             android:layout_marginStart="18dp"
-            android:layout_marginEnd="18dp" />
+            android:layout_marginEnd="18dp"
+            android:backgroundTint="@color/fade_indigo"
+            android:text="Очистити все" />
     </LinearLayout>
 </LinearLayout>

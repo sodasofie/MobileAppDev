@@ -2,4 +2,13 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="off_indigo">#7D8194</color>
+    <color name="fade_indigo">#5C628C</color>
+    <color name="lavander_indigo">#626EC8</color>
+    <color name="fade_dark_indigo">#25283E</color>
+    <color name="aqua_blue">#36C2ED</color>
+    <color name="fade_light_vio">#B0A8CA</color>
+    <color name="fader_light_vio">#998FBC</color>
+    <color name="faderer_light_vio">#817BA6</color>
+
 </resources>

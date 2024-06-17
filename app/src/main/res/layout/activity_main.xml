@@ -6,61 +6,66 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/fade_light_vio"
     tools:context=".MainActivity">
 
     <Button
         android:id="@+id/copy_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/button_color_selector"
         android:text="Копіювати"
         app:layout_constraintBottom_toTopOf="@id/qr_code_value_vt"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintVertical_bias="0.9" />
 
     <EditText
         android:id="@+id/qr_code_value_vt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/holo_red_dark"
+        android:textColor="@color/fade_dark_indigo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-    />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/start_scan_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/button_color_selector"
         android:text="Сканувати камерою"
-        app:layout_constraintTop_toBottomOf="@id/qr_code_value_vt"
-        app:layout_constraintStart_toStartOf="parent"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.1"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/qr_code_value_vt"
+        app:layout_constraintVertical_bias="0.1" />
 
     <Button
         android:id="@+id/upload_photo_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/button_color_selector"
         android:text="Сканувати фото з пристрою"
-        app:layout_constraintTop_toBottomOf="@id/start_scan_button"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.1"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/start_scan_button"
+        app:layout_constraintVertical_bias="0.1" />
 
     <Button
         android:id="@+id/history_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/button_color_selector"
         android:text="Історія"
-        app:layout_constraintTop_toBottomOf="@id/upload_photo_button"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.1"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/upload_photo_button"
+        app:layout_constraintVertical_bias="0.1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
