@@ -5,8 +5,6 @@
     android:background="@color/fade_dark_indigo"
     android:orientation="vertical">
 
-    <!-- Кнопка "Назад" -->
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -25,7 +23,6 @@
             android:paddingStart="8dp"
             android:src="@drawable/arrow_back_white" />
 
-        <!-- Заголовок "ІСТОРІЯ СКАНУВАНЬ" -->
         <TextView
             android:id="@+id/history_title"
             android:layout_width="match_parent"
@@ -38,23 +35,22 @@
             android:textSize="24sp"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
-    <!-- Контейнер для кнопок і текстів дат з прокруткою -->
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/fade_light_vio">
+        android:backgroundTint="@color/fade_light_vio">
 
         <LinearLayout
             android:id="@+id/buttons_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/fader_light_vio"
+            android:backgroundTint="@color/fader_light_vio"
             android:orientation="vertical"
             android:padding="16dp" />
     </ScrollView>
 
-    <!-- Горизонтальний контейнер для кнопок -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -63,7 +59,6 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <!-- Кнопка "Очистити вибране" -->
         <Button
             android:id="@+id/clear_selected_button"
             android:layout_width="wrap_content"
@@ -73,7 +68,6 @@
             android:backgroundTint="@color/fade_indigo"
             android:text="Очистити вибране" />
 
-        <!-- Кнопка "Очистити все" -->
         <Button
             android:id="@+id/clear_all_button"
             android:layout_width="wrap_content"
