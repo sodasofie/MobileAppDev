@@ -5,19 +5,13 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.TypedValue;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.SimpleDateFormat;
@@ -29,8 +23,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 public class HistoryActivity extends AppCompatActivity {
     private Map<String, List<String>> scanHistoryMap;
@@ -40,16 +35,13 @@ public class HistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
-        // Встановлюємо Toolbar як ActionBar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Налаштовуємо текст заголовка
         getSupportActionBar().setDisplayShowTitleEnabled(false); // Сховати стандартний заголовок
         TextView historyTitleTextView = findViewById(R.id.history_title);
         historyTitleTextView.setText("ІСТОРІЯ СКАНУВАНЬ");
 
-        // Обробник кліку на кнопку "Назад"
         ImageButton backButton = findViewById(R.id.back_button);
         backButton.setOnClickListener(v -> onBackPressed());
 
@@ -159,13 +151,12 @@ public class HistoryActivity extends AppCompatActivity {
         button.setText(link);
         button.setOnClickListener(v -> {
             if (selectedLinks.contains(link)) {
-                // Already selected, so unselect it
+
                 selectedLinks.remove(link);
-                button.setBackgroundColor(Color.TRANSPARENT);  // Reset background
+                button.setBackgroundColor(Color.TRANSPARENT);
             } else {
-                // Not selected, so select it
                 selectedLinks.add(link);
-                button.setBackgroundColor(Color.GRAY);  // Set background color for selection
+                button.setBackgroundColor(ContextCompat.getColor(this, R.color.faderer_light_vio));  // Set background color for selection
             }
         });
         return button;
